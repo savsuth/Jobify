@@ -52,7 +52,7 @@ flowchart TD
     START([START]) --> DJ[Discover Jobs]
     DJ -->|new or pending| AJ[Analyze Job]
     DJ -->|recovered| RA[Resume Agent]
-    DJ -->|recovered, high score| SM[Select Master Resume]
+    DJ -->|high score| SM[Select Master Resume]
     AJ -->|rejected| END1([END])
     AJ -->|tailoring band| RA
     AJ -->|no tailoring needed| SM
