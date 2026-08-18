@@ -4,7 +4,7 @@
 
 # Jobify
 
-A multi-agent job application system built with LangGraph and Claude which discovers and filters live job postings, analyzes candidate-job fit, and generates tailored resumes for relevant opportunities.
+A multi-agent job application system built with LangGraph and Claude that discovers and filters live job postings, analyzes candidate-job fit, and generates tailored resumes for relevant opportunities.
 
 [![Python](https://img.shields.io/badge/Python%203.11%2B-blue?logo=python&logoColor=white)](https://www.python.org)
 [![LangGraph](https://img.shields.io/badge/LangGraph-1c1c1c?logo=langgraph&logoColor=white)](https://www.langchain.com/langgraph)
