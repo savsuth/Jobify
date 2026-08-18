@@ -14,7 +14,7 @@ A multi-agent job application system built with LangGraph and Claude that discov
 
 ## Overview
 
-An unconstrained LLM pipeline for job search fails in two predictable ways. Aggregated postings carry noise the source data never flags on its own — stale listings, duplicates across platforms, and postings whose citizenship or clearance requirements the candidate doesn't meet. And a model asked to tailor a resume for every posting, with no limit on what it can claim, will invent experience the candidate doesn't have whenever fabrication produces a stronger match.
+An unconstrained LLM pipeline for job search fails in two predictable ways. Aggregated postings carry noise the source data never flags on its own — stale listings, duplicates across platforms, and postings whose citizenship or clearance requirements the candidate doesn't meet. A model asked to tailor a resume for every posting, with no limit on what it can claim, will invent experience the candidate doesn't have whenever fabrication produces a stronger match.
 
 Jobify addresses both failure modes with a strict separation between deterministic validation and model-driven reasoning. Location, employment type, role, freshness, and cross-source identity are resolved in code before a posting ever reaches an LLM. Only postings that survive that filtering are evaluated against their description and assigned an ATS score. From there, two purpose-built agents take over: one evaluates fit against the candidate's actual resume, and the other determines whether tailoring would improve the match, generating it only from evidence already on record.
 
@@ -74,7 +74,7 @@ The agents coordinate through persisted job and analysis state in the database: 
 
 ## Deterministic logic versus AI logic
 
-Hard constraints are deterministic; model-based reasoning is used only where interpretation or generation is genuinely required. The following are resolved by code, checked by tests, and identical on every run:
+Hard constraints are deterministic; model-based reasoning is used only where interpretation or generation is genuinely required. The following are resolved by code, verified by tests, and reproduced identically on every run:
 
 - US location, full-time employment, and target role filtering
 - posting freshness and cross-source canonical identity
@@ -104,7 +104,7 @@ The Resume Agent uses the ATS result and the candidate's evidence to determine w
 
 Neither threshold is fixed by the system — both `ats_threshold` and `resume_no_tailor_threshold` are ordinary fields on the single-row `search_config` table and can be set to any value. The current 30–65 band reflects a personal choice rather than a system default, set in part to assess, through live scraping, how the current job market scores against the candidate's actual profile.
 
-The Resume Agent is deliberately conservative about what it can change. It may reorganize and selectively tailor the candidate's existing evidence, but it cannot introduce a technology the candidate has not used, a metric that does not exist, production experience an academic project lacks, or a scale of system the candidate never built. The pool of projects it may cite is computed once in Python before the model runs, drawn from the master resume, live GitHub context, and the Candidate Project Library — a project outside that pool cannot be referenced, regardless of what the job description requests. Tailoring consists of selecting and reordering real evidence. A deterministic check afterward verifies that any GitHub fact the model reports using was indeed supplied to it.
+The Resume Agent is deliberately conservative about what it can change. It may reorganize and selectively tailor the candidate's existing evidence, but it cannot introduce a technology the candidate has not used, a metric that does not exist, production experience an academic project lacks, or a scale of system the candidate has never built. The pool of projects it may cite is computed once in Python before the model runs, drawn from the master resume, live GitHub context, and the Candidate Project Library — a project outside that pool cannot be referenced, regardless of what the job description requests. Tailoring consists of selecting and reordering real evidence. A deterministic check afterward verifies that any GitHub fact the model reports using was indeed supplied to it.
 
 ## Candidate Project Library
 
@@ -146,7 +146,7 @@ flowchart TD
 
 The pipeline delivers exactly two outputs for every job that reaches this stage: a resume the candidate can submit, and a row in the Excel tracker recording that job's outcome. Both are produced deterministically from the database.
 
-Every resume decision produces two artifacts: the generated LaTeX source (`.tex`, kept on disk for reproducibility) and the compiled PDF (the artifact a candidate submits). Both the tailored and master paths compile through the same `pdflatex` toolchain, with a one-page limit enforced — a multi-page result or a failed compile yields no PDF, only the `.tex`. The PDF is named deterministically as `AASAV-SUTHAR-<COMPANY>.pdf`, with a `-2` suffix only when a second, genuinely different tailored resume exists for the same company.
+Every resume decision produces two artifacts: the generated LaTeX source (`.tex`, kept on disk for reproducibility) and the compiled PDF (the artifact the candidate submits). Both the tailored and master paths compile through the same `pdflatex` toolchain, with a one-page limit enforced — a multi-page result or a failed compile yields no PDF, only the `.tex`. The PDF is named deterministically as `AASAV-SUTHAR-<COMPANY>.pdf`, with a `-2` suffix only when a second, genuinely different tailored resume exists for the same company.
 
 `scripts/reporting/build_job_tracker.py` rebuilds a workbook directly from the live database, and each row consolidates that job's complete pipeline record: posting details, freshness and eligibility classification, the ATS result, the resume decision, and — once generated — the resume draft's metadata and a link to its PDF. That data is organized across sheets — **CURRENT TARGETS** (currently eligible jobs), **JOBS** (full history), **REVIEW** (ambiguous eligibility), **DUPLICATES** (canonical-key groups and which row represents each), **RESUMES**, and **SUMMARY**. A **NEW JOBS** sheet is added by the run-scoped validation scripts under `scripts/validation/`, but it is not part of a normal rebuild. Every Job URL and Resume PDF link is clickable, and the resume link is written only once the PDF is confirmed to exist on disk.
 
@@ -206,7 +206,7 @@ cp .env.example .env
 
 | Variable | Required | Purpose |
 |---|---|---|
-| `ANTHROPIC_API_KEY` | Yes | Claude calls made by the ATS and Resume agents |
+| `ANTHROPIC_API_KEY` | Yes | Claude calls made by the ATS Agent and Resume Agent |
 | `DATABASE_URL` | Yes | Postgres connection string — a local instance (`postgresql+psycopg://localhost:5432/job_application_agent`) or the connection string from your Neon project dashboard (requires `?sslmode=require`) |
 | `GITHUB_TOKEN` | No | Raises the GitHub API rate limit; not required for normal use |
 
