@@ -121,7 +121,7 @@ flowchart TD
     C -->|no| R1[[Discarded]]
     C -->|yes| D{Duplicate?}
     D -->|yes| R2[[Discarded]]
-    D -->|no| E[Persisted as Job row]
+    D -->|no| E[Persisted as Job]
     E --> F{Fresh and eligible?}
     F -->|no| R3[[Held for later]]
     F -->|yes| G{Work-authorized?}
@@ -135,7 +135,7 @@ flowchart TD
     K --> M[Resume selection recorded]
     L --> M
     M --> N[Resume PDF rendered]
-    N --> O[Excel tracker row]
+    N --> O[Excel tracker]
 ```
 
 ## Identity and deduplication
