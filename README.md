@@ -192,7 +192,7 @@ Requires Python 3.11+, a Postgres database (this project runs on [Neon](https://
 **1. Clone the repository and install dependencies**
 
 ```bash
-git clone https://github.com/<your-username>/jobify.git
+git clone https://github.com/savsuth/jobify.git
 cd jobify
 python3 -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
