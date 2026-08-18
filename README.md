@@ -125,10 +125,10 @@ flowchart TD
     G -->|yes or unknown| H[ATS analysis]
     H --> I{Meets ATS threshold?}
     I -->|no| R5[[Marked rejected]]
-    I -->|yes| J{Needs tailoring?}
-    J -->|no| K[Select Master Resume]
+    I -->|yes| J{Tailoring?}
+    J -->|no| K[Master Resume]
     J -->|yes| L[Resume Agent]
-    K --> M[Resume selection recorded]
+    K --> M[Resume selection]
     L --> M
     M --> N[PDF]
     N --> O[Excel tracker]
