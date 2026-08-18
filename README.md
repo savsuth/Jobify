@@ -130,7 +130,7 @@ flowchart TD
     J -->|yes| L[Resume Agent]
     K --> M[Resume selection recorded]
     L --> M
-    M --> N[Resume PDF rendered]
+    M --> N[PDF]
     N --> O[Excel tracker]
 ```
 
