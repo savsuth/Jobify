@@ -1,0 +1,21 @@
+{
+  "name": "Music-Recommendation-System",
+  "owner": "savsuth",
+  "repo": "Music-Recommendation-System",
+  "url": "https://github.com/savsuth/Music-Recommendation-System",
+  "description": "A music recommendation system that suggests songs using lyrics, metadata, and optional audio features. Built with Sentence-BERT for semantic lyric similarity.",
+  "languages": {
+    "Jupyter Notebook": 18292
+  },
+  "topics": [],
+  "readme_excerpt": "# \ud83c\udfb5 Music Recommendation System (Lyrics + Metadata + Optional Spotify Audio Features)\n\nHybrid recommender that combines:\n- **Sentence-BERT** lyric embeddings for semantic similarity\n- **TF-IDF** over metadata (artist, genre, lyrics) for keyword similarity\n- *(Optional)* **Spotify audio features** (tempo, energy, valence, \u2026) for re-ranking\n\n## \ud83d\ude80 Features\n- Natural-language search (e.g., \u201cmoody indie for a rainy night\u201d)\n- Seed track recommendation (title + year)\n- Hybrid scoring: embeddings + metadata\n- Optional re-ranking via Spotify audio features\n\n## \ud83d\udcc2 Dataset\nUse the *Genius Song Lyrics with Language Information* dataset  \n(https://www.kaggle.com/datasets/carlosgdcj/genius-song-lyrics-with-language-information)  \nPlace the CSV at project root as `song_lyrics.csv` (filtered to English, \u226550 chars).",
+  "root_entries": [
+    ".gitignore",
+    "LICENSE",
+    "MusicRecommendationSystem.ipynb",
+    "README.md",
+    "requirements.txt"
+  ],
+  "stars": 0,
+  "fetched_at": "2026-08-14T16:45:50.763068+00:00"
+}

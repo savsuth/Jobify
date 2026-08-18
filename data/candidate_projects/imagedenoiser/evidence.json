@@ -1,0 +1,31 @@
+{
+  "name": "Imagedenoiser",
+  "owner": "savsuth",
+  "repo": "Imagedenoiser",
+  "url": "https://github.com/savsuth/Imagedenoiser",
+  "description": "Accelerates path-traced rendering by transforming noisy low-sample images into high-quality photorealistic outputs.",
+  "languages": {
+    "Python": 45436,
+    "HTML": 4649,
+    "CSS": 468
+  },
+  "topics": [],
+  "readme_excerpt": "# Image Denoising with GAN\n\n## Introduction\n\nPath tracing is a rendering technique widely used in high-end animation studios such as Pixar and DreamWorks to produce photorealistic frames. It operates by emitting thousands of Monte Carlo rays per pixel. These rays interact with objects in the scene through reflection, refraction, and absorption, and the returned colors are averaged to compute each pixel's final value. This approach produces accurate results but is computationally expensive; rendering a single frame can require 8 to 16 hours.\n\nThis project investigates a Generative Adversarial Network (GAN) approach to denoising as a method of reducing that rendering time. Rather than requiring tens of thousands of samples per pixel (32K spp), the renderer produces a noisy image using as few as 4 to 8 spp. The GAN then reconstructs the image into a high-quality, photorealistic result in a fraction of a second, reducing total rendering time from hours to seconds.\n\n## Installation\n\n**Requirements:**\n- Python 3.10\n- TensorFlow (v1.0 or v1.1)\n- PIL\n- [Checkpoint file](https://uofi.box.com/shared/static/21a5jwdiqpnx24c50cyolwzwycnr3fwe.gz)\n- [Dataset](https://uofi.box.com/shared/static/gy0t3vgwtlk1933xbtz1zvhlakkdac3n.zip)\n\n## Dataset\n\nThe training set consists of 40 images sampled from Pixar titles. Noise was synthesized by applying Gaussian perturbations across a 5x5 grid of standard deviation settings, comprising five sets of five sigma values each, producing 1,000 training sampl",
+  "root_entries": [
+    ".gitignore",
+    "LICENSE",
+    "README.md",
+    "assets",
+    "conv_helper.py",
+    "libs",
+    "main.py",
+    "model.py",
+    "static",
+    "templates",
+    "test.py",
+    "train.py",
+    "utils.py"
+  ],
+  "stars": 0,
+  "fetched_at": "2026-08-14T16:45:49.689241+00:00"
+}

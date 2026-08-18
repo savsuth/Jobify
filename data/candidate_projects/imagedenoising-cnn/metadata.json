@@ -1,0 +1,18 @@
+{
+  "name": "ImageDenoising-CNN",
+  "slug": "imagedenoising-cnn",
+  "source": "github_only",
+  "owner": "savsuth",
+  "repo": "ImageDenoising-CNN",
+  "url": "https://github.com/savsuth/ImageDenoising-CNN",
+  "eligibility_state": "needs_review",
+  "exclusion_reason": null,
+  "resume_bullets_source": "generated",
+  "resume_bullets_available": true,
+  "languages": [
+    "Jupyter Notebook",
+    "Python"
+  ],
+  "topics": [],
+  "stars": 0
+}

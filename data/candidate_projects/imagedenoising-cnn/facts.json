@@ -1,0 +1,18 @@
+{
+  "primary_language": "Jupyter Notebook",
+  "detected_technologies": [
+    {
+      "technology": "Streamlit",
+      "evidence": "description"
+    },
+    {
+      "technology": "CNN",
+      "evidence": "README.md"
+    }
+  ],
+  "detected_manifests": [
+    "Python pip requirements"
+  ],
+  "has_docker_config": false,
+  "has_tests_directory": false
+}

@@ -1,0 +1,12 @@
+{
+  "primary_language": "Python",
+  "detected_technologies": [
+    {
+      "technology": "TensorFlow",
+      "evidence": "README.md"
+    }
+  ],
+  "detected_manifests": [],
+  "has_docker_config": false,
+  "has_tests_directory": false
+}

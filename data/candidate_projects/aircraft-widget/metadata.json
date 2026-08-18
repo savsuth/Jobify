@@ -1,0 +1,17 @@
+{
+  "name": "aircraft-widget",
+  "slug": "aircraft-widget",
+  "source": "github_only",
+  "owner": "savsuth",
+  "repo": "aircraft-widget",
+  "url": "https://github.com/savsuth/aircraft-widget",
+  "eligibility_state": "needs_review",
+  "exclusion_reason": null,
+  "resume_bullets_source": "generated",
+  "resume_bullets_available": true,
+  "languages": [
+    "Python"
+  ],
+  "topics": [],
+  "stars": 0
+}

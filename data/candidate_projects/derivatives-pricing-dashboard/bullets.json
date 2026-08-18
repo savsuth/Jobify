@@ -1,0 +1,20 @@
+[
+  {
+    "text": "Created an interactive Streamlit dashboard implementing the Black-Scholes model to compute European call and put option prices under varying market conditions",
+    "evidence": [
+      "profile/resume.tex"
+    ]
+  },
+  {
+    "text": "Developed side-by-side interactive heatmaps visualizing option price sensitivity across user-defined spot price and volatility ranges for call versus put comparison",
+    "evidence": [
+      "profile/resume.tex"
+    ]
+  },
+  {
+    "text": "Designed customizable input controls for spot price, strike price, time to maturity, volatility, and risk-free rate, using pandas and NumPy for computation and Matplotlib and Seaborn for visualization",
+    "evidence": [
+      "profile/resume.tex"
+    ]
+  }
+]

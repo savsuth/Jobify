@@ -1,0 +1,39 @@
+{
+  "name": "Discord-Clone",
+  "owner": "savsuth",
+  "repo": "Discord-Clone",
+  "url": "https://github.com/savsuth/Discord-Clone",
+  "description": "Full-stack Discord app with Next.js,React, Prisma (Supabase), Socket.io, LiveKit AV and Clerk auth-servers, channels, DMs, video/audio, uploads, invites and roles.",
+  "languages": {
+    "TypeScript": 191092,
+    "CSS": 5261,
+    "JavaScript": 793
+  },
+  "topics": [],
+  "readme_excerpt": "# Discord Application\n\n![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js&logoColor=white)\n![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript&logoColor=white)\n![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748?logo=prisma&logoColor=white)\n![License](https://img.shields.io/github/license/savsuth/discord-app)\n\nA Discord-style communication platform built with Next.js, Prisma, and LiveKit. Supports servers, channels, text and audio/video chat, file uploads, invites, member roles, and realtime presence.\n\n---\n\n## Features\n\n- Authentication via Clerk, with automatic user profile bootstrapping\n- Servers, text/audio/video channels, direct messages, and 1:1 video calls\n- Realtime messaging through Socket.io, with a polling fallback indicator\n- File uploads via UploadThing, with emoji picker support\n- LiveKit-powered audio/video rooms with in-room chat\n- Invite links and member management (roles, kick)\n- Infinite message loading using `@tanstack/react-query`\n- Light and dark theme support, responsive UI built with Tailwind CSS and Radix primitives\n\n## Tech Stack\n\n| Category | Technologies |\n|---|---|\n| Framework | Next.js 16 (App Router), React 19, TypeScript |\n| Database | PostgreSQL (Supabase), Prisma ORM via `pg` adapter |\n| Realtime | Socket.io, LiveKit |\n| Auth | Clerk |\n| Uploads | UploadThing |\n| UI | Tailwind CSS v4, shadcn/Radix UI |\n\n## Prerequisites\n\n- Node.js 18.17 or higher (20.x recommended)\n- A PostgreSQL or Supabase dat",
+  "root_entries": [
+    ".gitignore",
+    "LICENSE",
+    "README.md",
+    "app",
+    "clerkMiddleware.ts",
+    "components.json",
+    "components",
+    "eslint.config.mjs",
+    "hooks",
+    "lib",
+    "next.config.ts",
+    "package-lock.json",
+    "package.json",
+    "pages",
+    "postcss.config.mjs",
+    "prisma.config.ts",
+    "prisma",
+    "proxy.ts",
+    "public",
+    "tsconfig.json",
+    "types"
+  ],
+  "stars": 0,
+  "fetched_at": "2026-08-14T16:45:49.127656+00:00"
+}

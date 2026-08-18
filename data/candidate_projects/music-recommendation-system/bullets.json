@@ -1,0 +1,21 @@
+[
+  {
+    "text": "Built a music recommendation system that suggests songs using lyrics, metadata, and optional audio features. Built with Sentence-BERT for semantic lyric similarity.",
+    "evidence": [
+      "description"
+    ]
+  },
+  {
+    "text": "Used Sentence-BERT, TF-IDF, Spotify in the implementation.",
+    "evidence": [
+      "README.md",
+      "description"
+    ]
+  },
+  {
+    "text": "Implements: Sentence-BERT lyric embeddings for semantic similarity; TF-IDF over metadata (artist, genre, lyrics) for keyword similarity; (Optional) Spotify audio features (tempo, energy, valence, \u2026) for re-ranking.",
+    "evidence": [
+      "README.md"
+    ]
+  }
+]

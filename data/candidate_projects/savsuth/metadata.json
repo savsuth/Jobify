@@ -1,0 +1,15 @@
+{
+  "name": "savsuth",
+  "slug": "savsuth",
+  "source": "github_only",
+  "owner": "savsuth",
+  "repo": "savsuth",
+  "url": "https://github.com/savsuth/savsuth",
+  "eligibility_state": "excluded",
+  "exclusion_reason": "This is the account's GitHub profile README repository, not a project.",
+  "resume_bullets_source": "none",
+  "resume_bullets_available": false,
+  "languages": [],
+  "topics": [],
+  "stars": 0
+}

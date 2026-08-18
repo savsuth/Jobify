@@ -1,0 +1,91 @@
+# Job search preferences. Seeds the `search_config` DB row on first run;
+# after that, edits here are picked up by re-running `scripts/seed_config.py`
+# (later: editable from the dashboard instead).
+
+title_keywords:
+  # HIGH interest
+  - "Data Engineer"
+  - "Data Platform Engineer"
+  - "ML Engineer"
+  - "Applied AI Engineer"
+  - "Backend Software Engineer"
+  - "Software Engineer — Data/ML"
+  - "AI/ML Platform Engineer"
+  - "Software Engineer"
+  - "Forward Deployed Engineer"
+  # MEDIUM-HIGH interest
+  - "Software Engineer II (SDE II)"
+  - "Backend Engineer II"
+  - "Software Engineer — Infrastructure"
+  - "Software Engineer — Platform"
+  - "Search / Retrieval Engineer"
+  - "NLP / LLM Engineer"
+  - "Data Infrastructure Engineer"
+  - "ML Infrastructure Engineer"
+  - "Solutions Engineer — AI/Data"
+  - "Customer Engineer — AI/Data"
+  # SELECTIVE interest
+  - "Data Scientist — ML-focused"
+  - "Quantitative Developer"
+  - "Quantitative Software Engineer"
+  - "Algorithm Engineer"
+  - "Optimization Engineer"
+
+locations:
+  - "United States"
+
+remote_pref: any # remote | hybrid | onsite | any
+
+experience_level: "entry-level (intern / new grad, graduating December 2026)"
+
+technologies:
+  - Python
+  - Rust
+  - SQL
+  - TensorFlow
+  - PyTorch
+  - PostgreSQL
+  - AWS
+  - Docker
+
+# Greenhouse/Lever board tokens (the slug in their public job-board URL),
+# e.g. https://job-boards.greenhouse.io/{token} or https://jobs.lever.co/{token}
+companies:
+  greenhouse:
+    - stripe
+    - coinbase
+    - robinhood
+    - figma
+    - discord
+    - asana
+  lever:
+    - palantir
+    - spotify
+
+# Reject cutoff for the ATS gate. Jobs below this score never reach the Resume
+# Agent. 30-64 is routed to the Resume Agent (30-49 = active tailoring search,
+# 50-64 = selective tailoring); >= resume_no_tailor_threshold keeps the master
+# resume unmodified.
+ats_threshold: 30
+
+# At or above this score, the master resume is used as-is - no Resume Agent
+# Claude call is made.
+resume_no_tailor_threshold: 65
+
+# Safety cap: max NEW jobs analyzed (i.e. ATS-scored via Claude) in a single
+# pipeline run, to bound cost/time when a company board has hundreds of postings.
+# Jobs beyond the cap aren't lost - they're simply not yet in the `jobs` table, so
+# subsequent runs will pick up more of them (title-filtered pool minus what's
+# already been discovered).
+max_jobs_per_run: 40
+
+# Freshness gate: a job must have been posted within this many days of "now"
+# to enter the fresh operational pool (ATS/Resume). Uses the source's real
+# original posting date (Greenhouse first_published / Lever createdAt / web
+# search date evidence when found) - never discovered_at/ingestion time. A
+# job with no trustworthy posting date is POST_DATE_UNKNOWN and is excluded
+# from the fresh pool the same as a stale one, never assumed recent. Old/
+# unknown-date jobs are still persisted for historical/audit visibility, just
+# not sent to ATS. Set to null to disable the gate entirely (restores prior
+# behavior - nothing rejected on posting date).
+posted_within_days: 7

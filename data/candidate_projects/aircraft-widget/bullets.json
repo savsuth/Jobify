@@ -1,0 +1,20 @@
+[
+  {
+    "text": "Built a floating desktop widget that tracks nearby aircraft according to their coordinates.",
+    "evidence": [
+      "description"
+    ]
+  },
+  {
+    "text": "Used PyQt6, Anthropic, Claude in the implementation.",
+    "evidence": [
+      "README.md"
+    ]
+  },
+  {
+    "text": "Implements: adsb.py (in the core folder) fetches nearby aircraft from airplanes.live within a set...; planespotters.py (in the core folder) retrieves a photo of the selected aircraft from...; agent.py (in the core folder) is the AI agent. It sends the flight's telemetry and...",
+    "evidence": [
+      "README.md"
+    ]
+  }
+]

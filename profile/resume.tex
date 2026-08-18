@@ -1,0 +1,165 @@
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\input{glyphtounicode}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\addtolength{\oddsidemargin}{-0.6in}
+\addtolength{\evensidemargin}{-0.6in}
+\addtolength{\textwidth}{1.2in}
+\addtolength{\topmargin}{-0.9in}
+\addtolength{\textheight}{1.8in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+\titleformat{\section}{
+  \vspace{-6pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-7pt}]
+
+\pdfgentounicode=1
+
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-3pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-1pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-6pt}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textit{\small#1} & \textit{\small #2} \\
+    \end{tabular*}\vspace{-6pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & #2 \\
+    \end{tabular*}\vspace{-6pt}
+}
+
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-2pt}}
+
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}, itemsep=0pt]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}\vspace{-4pt}}
+\newcommand{\resumeItemListStart}{\begin{itemize}[itemsep=-1pt, topsep=1pt]}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-4pt}}
+
+\begin{document}
+
+\begin{center}
+    \textbf{\Huge \scshape Aasav Suthar} \\ \vspace{1pt}
+    \small 
+    \textcolor{blue}{\href{mailto:suthar.aa@northeastern.edu}{{suthar.aa@northeastern.edu}}} $|$ 
+    \textcolor{blue}{\href{tel:+18572149421}{(857) 214-9421}} $|$
+    \textcolor{blue}{\href{https://linkedin.com/in/aasavsuthar}{LinkedIn}} $|$
+    \textcolor{blue}{\href{https://github.com/savsuth}{GitHub}}
+      $|$ Boston, MA
+\end{center}
+\vspace{-8pt}
+
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Northeastern University}{Boston, MA}
+      {Master of Science in Computer Science}{January 2025 -- December 2026}
+    \resumeSubheading
+      {Indus University}{Ahmedabad, India}
+      {Bachelor of Technology in Computer Engineering}{April 2020 -- April 2024}
+  \resumeSubHeadingListEnd
+
+\section{Experience}
+  \resumeSubHeadingListStart
+
+  \resumeSubheading
+      {Shaligram Infotech}{January 2024 -- October 2024}
+      {Data Engineer}{Ahmedabad, India}
+      \resumeItemListStart
+        \resumeItem{Prototyped a GPT-3.5-based FAQ assistant for a fintech client's Dynamics 365 CRM support desk to handle queries across billing, account, and policy categories}
+        \resumeItem{Constructed a FAISS-based retrieval-augmented generation (RAG) pipeline in Python to ground the assistant's responses in the client's compliance and product documentation}
+        \resumeItem{Engineered TensorFlow image preprocessing and augmentation pipelines for a separate computer vision initiative, including resizing, normalization, rotation, and flip transforms, to improve training data quality for downstream models}
+        \resumeItem{Profiled structured datasets using Talend Data Quality to identify schema mismatches and null-value anomalies, safeguarding data integrity before issues could compromise the ETL pipeline}
+      \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+
+\section{Projects}
+    \resumeSubHeadingListStart
+      \resumeProjectHeading
+          {\textbf{TokenPress} $|$ \textcolor{blue}{{\href{https://github.com/savsuth/Tokenpress}{GitHub}}}}{}
+          \resumeItemListStart
+            \resumeItem{Engineered a zero-dependency Python library that dynamically detects input types (JSON, code, logs) and applies specialized compression, reducing LLM pipeline token usage by up to 90\%}
+            \resumeItem{Implemented recursive null-value removal for structured data, signature extraction with docstring and comment stripping for code, and log deduplication with error-only filtering}
+            \resumeItem{Benchmarked token efficiency across a 361-test suite using tiktoken, achieving a 76\% average reduction while maintaining a stateless, thread-safe, and non-mutating architecture}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{Turbovec} $|$ \textcolor{blue}{{\href{https://github.com/savsuth/Turbovec}{GitHub}}}}{}
+          \resumeItemListStart
+            \resumeItem{Built a Rust vector search index that compresses embeddings to 2 bits per dimension using Google's TurboQuant algorithm, achieving 12.6x compression with no training or calibration step}
+            \resumeItem{Implemented a NEON SIMD-accelerated, multi-threaded (rayon) search kernel exposed to Python via PyO3 and maturin}
+            \resumeItem{Validated the quantization algorithm in a Python and NumPy prototype before porting to Rust, improving per-query latency from 45.1ms to 0.461ms}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{Traffic-Aware Routing System} $|$ \textcolor{blue}{{\href{https://github.com/savsuth/Routing-system}{GitHub}}}}{}
+          \resumeItemListStart
+            \resumeItem{Designed a time-dependent A* routing engine over Boston's real road network (11,409 nodes, 26,083 edges) incorporating real-time traffic conditions}
+            \resumeItem{Trained LightGBM models on 4.3M traffic samples using 21 engineered temporal, spatial, and weather features, which helped achieve 27s MAE and R² of 0.89}
+            \resumeItem{Visualized routes and traffic predictions on an interactive Streamlit map, layering real-time congestion overlays to validate model outputs against actual road conditions}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{Derivatives Pricing Dashboard} $|$ \textcolor{blue}{{\href{https://github.com/savsuth/Derivatives-Pricing-Dashboard}{GitHub}}}}{}
+          \resumeItemListStart
+            \resumeItem{Created an interactive Streamlit dashboard implementing the Black-Scholes model to compute European call and put option prices under varying market conditions}
+            \resumeItem{Developed side-by-side interactive heatmaps visualizing option price sensitivity across user-defined spot price and volatility ranges for call versus put comparison}
+            \resumeItem{Designed customizable input controls for spot price, strike price, time to maturity, volatility, and risk-free rate, using pandas and NumPy for computation and Matplotlib and Seaborn for visualization}
+          \resumeItemListEnd
+    \resumeSubHeadingListEnd
+
+\section{Technical Skills}
+ \begin{itemize}[leftmargin=0.15in, label={}, itemsep=-2pt]
+    \small{\item{
+     \textbf{Languages}{: Python, Java, C, C++, C\#, Rust, SQL, JavaScript} \\
+     \textbf{Libraries}{: TensorFlow, Keras, PyTorch, Scikit-learn, FAISS, LightGBM, NLTK, NumPy, SciPy} \\
+     \textbf{Rust Ecosystem}{: PyO3, maturin, rayon} \\
+     \textbf{LLM APIs}{: Anthropic API, OpenAI API} \\
+     \textbf{Databases}{: MySQL, SQLite, PostgreSQL, MongoDB} \\
+     \textbf{Tools}{: Git, GitHub, GitHub Actions, Docker, Kubernetes, Terraform, Prisma, Node.js, WebSockets, Socket.io} \\
+     \textbf{Cloud/Platforms}{: AWS (SageMaker, Lambda, EC2), Jenkins} \\
+     \textbf{Visualization}{: Streamlit, Seaborn, Tensorboard, Matplotlib} \\
+    }}
+ \end{itemize}
+ \vspace{-8pt}
+
+\end{document}

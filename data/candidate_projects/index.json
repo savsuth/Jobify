@@ -1,0 +1,90 @@
+[
+  {
+    "name": "aircraft-widget",
+    "slug": "aircraft-widget",
+    "source": "github_only",
+    "eligibility_state": "needs_review",
+    "resume_bullets_available": true,
+    "selectable": false
+  },
+  {
+    "name": "Derivatives Pricing Dashboard",
+    "slug": "derivatives-pricing-dashboard",
+    "source": "master_resume",
+    "eligibility_state": "approved",
+    "resume_bullets_available": true,
+    "selectable": true
+  },
+  {
+    "name": "Discord-Clone",
+    "slug": "discord-clone",
+    "source": "github_only",
+    "eligibility_state": "approved",
+    "resume_bullets_available": true,
+    "selectable": true
+  },
+  {
+    "name": "Imagedenoiser",
+    "slug": "imagedenoiser",
+    "source": "github_only",
+    "eligibility_state": "approved",
+    "resume_bullets_available": true,
+    "selectable": true
+  },
+  {
+    "name": "ImageDenoising-CNN",
+    "slug": "imagedenoising-cnn",
+    "source": "github_only",
+    "eligibility_state": "needs_review",
+    "resume_bullets_available": true,
+    "selectable": false
+  },
+  {
+    "name": "Music-Recommendation-System",
+    "slug": "music-recommendation-system",
+    "source": "github_only",
+    "eligibility_state": "needs_review",
+    "resume_bullets_available": true,
+    "selectable": false
+  },
+  {
+    "name": "savsuth",
+    "slug": "savsuth",
+    "source": "github_only",
+    "eligibility_state": "excluded",
+    "resume_bullets_available": false,
+    "selectable": false
+  },
+  {
+    "name": "TokenPress",
+    "slug": "tokenpress",
+    "source": "master_resume",
+    "eligibility_state": "approved",
+    "resume_bullets_available": true,
+    "selectable": true
+  },
+  {
+    "name": "Traffic-Aware Routing System",
+    "slug": "traffic-aware-routing-system",
+    "source": "master_resume",
+    "eligibility_state": "approved",
+    "resume_bullets_available": true,
+    "selectable": true
+  },
+  {
+    "name": "Turbovec",
+    "slug": "turbovec",
+    "source": "master_resume",
+    "eligibility_state": "approved",
+    "resume_bullets_available": true,
+    "selectable": true
+  },
+  {
+    "name": "Virtual-calendar",
+    "slug": "virtual-calendar",
+    "source": "github_only",
+    "eligibility_state": "approved",
+    "resume_bullets_available": true,
+    "selectable": true
+  }
+]

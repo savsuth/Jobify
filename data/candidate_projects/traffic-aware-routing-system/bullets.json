@@ -1,0 +1,20 @@
+[
+  {
+    "text": "Designed a time-dependent A* routing engine over Boston's real road network (11,409 nodes, 26,083 edges) incorporating real-time traffic conditions",
+    "evidence": [
+      "profile/resume.tex"
+    ]
+  },
+  {
+    "text": "Trained LightGBM models on 4.3M traffic samples using 21 engineered temporal, spatial, and weather features, which helped achieve 27s MAE and R\u00b2 of 0.89",
+    "evidence": [
+      "profile/resume.tex"
+    ]
+  },
+  {
+    "text": "Visualized routes and traffic predictions on an interactive Streamlit map, layering real-time congestion overlays to validate model outputs against actual road conditions",
+    "evidence": [
+      "profile/resume.tex"
+    ]
+  }
+]

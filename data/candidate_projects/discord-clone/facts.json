@@ -1,0 +1,42 @@
+{
+  "primary_language": "TypeScript",
+  "detected_technologies": [
+    {
+      "technology": "React",
+      "evidence": "description"
+    },
+    {
+      "technology": "Next.js",
+      "evidence": "description"
+    },
+    {
+      "technology": "Socket.io",
+      "evidence": "description"
+    },
+    {
+      "technology": "Prisma",
+      "evidence": "description"
+    },
+    {
+      "technology": "Supabase",
+      "evidence": "description"
+    },
+    {
+      "technology": "Node.js",
+      "evidence": "README.md"
+    },
+    {
+      "technology": "PostgreSQL",
+      "evidence": "README.md"
+    },
+    {
+      "technology": "Authentication",
+      "evidence": "README.md"
+    }
+  ],
+  "detected_manifests": [
+    "npm/Node.js package manifest"
+  ],
+  "has_docker_config": false,
+  "has_tests_directory": false
+}

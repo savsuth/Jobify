@@ -1,0 +1,22 @@
+{
+  "primary_language": "Java",
+  "detected_technologies": [
+    {
+      "technology": "MVC",
+      "evidence": "description"
+    },
+    {
+      "technology": "CLI",
+      "evidence": "description"
+    },
+    {
+      "technology": "GUI",
+      "evidence": "description"
+    }
+  ],
+  "detected_manifests": [
+    "Maven build manifest (Java)"
+  ],
+  "has_docker_config": false,
+  "has_tests_directory": false
+}

@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 300" width="1280" height="300" role="img" aria-label="Jobify — a multi-agent job application system built with LangGraph and Claude">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0f14"/>
+      <stop offset="100%" stop-color="#141a21"/>
+    </linearGradient>
+    <linearGradient id="stack" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4c8bf5"/>
+      <stop offset="34%" stop-color="#4c8bf5"/>
+      <stop offset="34%" stop-color="#d97757"/>
+      <stop offset="67%" stop-color="#d97757"/>
+      <stop offset="67%" stop-color="#00e599"/>
+      <stop offset="100%" stop-color="#00e599"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="0" y="0" width="1280" height="300" fill="url(#bg)"/>
+
+  <text x="60" y="76" font-family="Consolas, 'Courier New', monospace" font-size="14" letter-spacing="3" fill="#6b7684">AI JOB APPLICATION PIPELINE</text>
+
+  <text x="58" y="168" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="72" font-weight="700" fill="#f2f4f7">Jobify</text>
+
+  <text x="60" y="208" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" fill="#9aa4af">Discovers live postings, evaluates candidate fit, and tailors resumes</text>
+  <text x="60" y="234" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" fill="#9aa4af">with LangGraph and Claude.</text>
+
+  <g stroke="#333d48" stroke-width="2">
+    <line x1="826" y1="150" x2="898" y2="150"/>
+    <line x1="946" y1="150" x2="1018" y2="150"/>
+    <line x1="1066" y1="150" x2="1138" y2="150"/>
+  </g>
+
+  <g font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#8b96a3" text-anchor="middle">
+    <circle cx="800" cy="150" r="24" fill="#182028" stroke="#4c8bf5" stroke-width="2.5"/>
+    <text x="800" y="155" font-weight="700" fill="#4c8bf5" font-size="12">DISC</text>
+    <text x="800" y="196">Discover</text>
+
+    <circle cx="920" cy="150" r="24" fill="#182028" stroke="#d97757" stroke-width="2.5"/>
+    <text x="920" y="155" font-weight="700" fill="#d97757" font-size="12">ATS</text>
+    <text x="920" y="196">Evaluate</text>
+
+    <circle cx="1040" cy="150" r="24" fill="#182028" stroke="#d97757" stroke-width="2.5"/>
+    <text x="1040" y="155" font-weight="700" fill="#d97757" font-size="12">RES</text>
+    <text x="1040" y="196">Tailor</text>
+
+    <circle cx="1160" cy="150" r="24" fill="#182028" stroke="#00e599" stroke-width="2.5"/>
+    <text x="1160" y="155" font-weight="700" fill="#00e599" font-size="12">OUT</text>
+    <text x="1160" y="196">Deliver</text>
+  </g>
+
+  <rect x="0" y="294" width="1280" height="6" fill="url(#stack)"/>
+</svg>

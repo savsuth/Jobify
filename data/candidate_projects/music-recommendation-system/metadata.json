@@ -1,0 +1,17 @@
+{
+  "name": "Music-Recommendation-System",
+  "slug": "music-recommendation-system",
+  "source": "github_only",
+  "owner": "savsuth",
+  "repo": "Music-Recommendation-System",
+  "url": "https://github.com/savsuth/Music-Recommendation-System",
+  "eligibility_state": "needs_review",
+  "exclusion_reason": null,
+  "resume_bullets_source": "generated",
+  "resume_bullets_available": true,
+  "languages": [
+    "Jupyter Notebook"
+  ],
+  "topics": [],
+  "stars": 0
+}

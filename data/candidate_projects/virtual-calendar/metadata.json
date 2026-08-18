@@ -1,0 +1,20 @@
+{
+  "name": "Virtual-calendar",
+  "slug": "virtual-calendar",
+  "source": "github_only",
+  "owner": "savsuth",
+  "repo": "Virtual-calendar",
+  "url": "https://github.com/savsuth/Virtual-calendar",
+  "eligibility_state": "approved",
+  "exclusion_reason": null,
+  "resume_bullets_source": "human_provided",
+  "resume_bullets_available": true,
+  "languages": [
+    "Java",
+    "Python",
+    "Batchfile"
+  ],
+  "topics": [],
+  "stars": 0,
+  "description": "A Java-based calendar application implementing MVC and Observer patterns, offering GUI and CLI interfaces, multi-calendar syncing and timezone notifications."
+}

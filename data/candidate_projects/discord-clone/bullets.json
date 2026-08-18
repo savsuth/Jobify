@@ -1,0 +1,20 @@
+[
+  {
+    "text": "Built a full-stack real-time messaging platform with server and channel architecture, supporting text, audio, and video communication via Socket.io and LiveKit",
+    "evidence": [
+      "human_provided"
+    ]
+  },
+  {
+    "text": "Developed a role-based permission system, invite link generation, and member moderation features using Next.js, React, TypeScript, and Prisma ORM",
+    "evidence": [
+      "human_provided"
+    ]
+  },
+  {
+    "text": "Implemented Clerk authentication, UploadThing file uploads, and infinite-scroll message history using Tanstack Query with cursor-based pagination",
+    "evidence": [
+      "human_provided"
+    ]
+  }
+]

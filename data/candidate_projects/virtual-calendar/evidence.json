@@ -1,0 +1,30 @@
+{
+  "name": "Virtual-calendar",
+  "owner": "savsuth",
+  "repo": "Virtual-calendar",
+  "url": "https://github.com/savsuth/Virtual-calendar",
+  "description": "A Java-based calendar application implementing MVC and Observer patterns, offering GUI and CLI interfaces, multi-calendar syncing and timezone notifications.",
+  "languages": {
+    "Java": 401826,
+    "Python": 1572,
+    "Batchfile": 182
+  },
+  "topics": [],
+  "readme_excerpt": "# Virtual Calendar Application\n\n[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)\n[![Java](https://img.shields.io/badge/Java-11%2B-red.svg)](https://www.oracle.com/java/)\n[![Maven](https://img.shields.io/badge/Maven-3.6+-blue.svg)](https://maven.apache.org/)\n\n> **New in Sprint 4:** Java Swing GUI with month view and analytics dashboard, CSV import, and unified controller across CLI, headless, and GUI modes.\n> **Full changelog \u2192** [`changelog.md`](changelog.md)\n\n## Overview\n\nThis project implements a comprehensive virtual calendar application that mimics the core features of popular calendar software like Google Calendar and iCalendar. Built using Java with Maven, the application follows MVC (Model-View-Controller) architecture and SOLID design principles to ensure maintainability, scalability, and extensibility.\n\n\n## Visual Demonstrations\n\n### Command Line Interface\n![CLI Interface](images/CLI.png)\n*Interactive mode showing various calendar operations and commands*\n\n### Export Functionality\n![Export Feature](images/Export.png)\n*Calendar export functionality generating CSV files*\n\n### Google Calendar Integration\n![Google Calendar Import](images/Google%20Calendar%20Import%20CSV%20Screenshot.png)\n*Exported calendar data successfully imported into Google Calendar*\n\n### Test Coverage and Quality Assurance\n![Mutation Testing Results](images/Mutation%20Testing.png)\n*Comprehensive mutation testing ensuring **89%** test strengt",
+  "root_entries": [
+    ".Rhistory",
+    ".gitattributes",
+    ".github",
+    ".gitignore",
+    "LICENSE",
+    "changelog.md",
+    "docs",
+    "images",
+    "pom.xml",
+    "readme.md",
+    "res",
+    "src"
+  ],
+  "stars": 0,
+  "fetched_at": "2026-08-14T16:45:51.924314+00:00"
+}

@@ -1,0 +1,25 @@
+{
+  "name": "ImageDenoising-CNN",
+  "owner": "savsuth",
+  "repo": "ImageDenoising-CNN",
+  "url": "https://github.com/savsuth/ImageDenoising-CNN",
+  "description": "Image denoising architecture implemented through Streamlit app.",
+  "languages": {
+    "Jupyter Notebook": 7899397,
+    "Python": 3443
+  },
+  "topics": [],
+  "readme_excerpt": "# ImageDenoising\nImages captured in real-world environments often contain significant noise, which can adversely impact low-level vision tasks and related applications. Effective noise removal is therefore a critical step in enhancing image quality and enabling robust computer vision performance.\n\nOver the years many techniques and filters have been introduced for image denoising. They used to work to some extent in denoising the images. But most of these techniques assumed the noise in images to be gaussian noise or impulse noise. But this assumption doesn't completely hold true for real noise in photographs. The real world noise is more sophisticated and diverse. Due to this most of these techniques performed poorly in completely removing real noise from images.\n\nThis is where deep learning comes into picture and experiments have proved that training a convolutional blind denoising deep learning network outperforms other techniques in image denoising tasks by a large margin.\n\nIn this case study, I have implemented four state-of-the-art CNN based architecture for image denoising tasks as follows\n1. Autoencoder (as a baseline model)\n2. CBDNet\n3. PRIDNet\n4. RIDNet\n\nAmong these models, RIDNet gave the best performance and using it.\n\nBelow are the few predcitions of RIDNet model in image denoising on some real noisy images\n![image](https://user-images.githubusercontent.com/85414148/131446414-a4dbe8cf-f8c6-4ec5-887a-fc3a4f3deb42.png)\n![image](https://user-images.githubusercontent",
+  "root_entries": [
+    "ImageDenoising.ipynb",
+    "LICENSE",
+    "NoisyImage",
+    "README.md",
+    "RIDNet.h5",
+    "model.py",
+    "readme_app.PNG",
+    "requirements.txt"
+  ],
+  "stars": 0,
+  "fetched_at": "2026-08-14T16:45:50.245541+00:00"
+}

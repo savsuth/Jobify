@@ -1,0 +1,21 @@
+[
+  {
+    "text": "Built: Image denoising architecture implemented through Streamlit app.",
+    "evidence": [
+      "description"
+    ]
+  },
+  {
+    "text": "Used Streamlit, CNN in the implementation.",
+    "evidence": [
+      "README.md",
+      "description"
+    ]
+  },
+  {
+    "text": "Implements: Autoencoder (as a baseline model); CBDNet; PRIDNet.",
+    "evidence": [
+      "README.md"
+    ]
+  }
+]

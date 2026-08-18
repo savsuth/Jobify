@@ -1,0 +1,20 @@
+{
+  "name": "Imagedenoiser",
+  "slug": "imagedenoiser",
+  "source": "github_only",
+  "owner": "savsuth",
+  "repo": "Imagedenoiser",
+  "url": "https://github.com/savsuth/Imagedenoiser",
+  "eligibility_state": "approved",
+  "exclusion_reason": null,
+  "resume_bullets_source": "human_provided",
+  "resume_bullets_available": true,
+  "languages": [
+    "Python",
+    "HTML",
+    "CSS"
+  ],
+  "topics": [],
+  "stars": 0,
+  "description": "Accelerates path-traced rendering by transforming noisy low-sample images into high-quality photorealistic outputs."
+}
