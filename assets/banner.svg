@@ -48,7 +48,7 @@
       <stop offset="100%" stop-color="#1f8a63"/>
     </linearGradient>
   </defs>
-
+#ff
   <rect width="1280" height="320" fill="url(#bg)"/>
   <rect width="1280" height="320" fill="url(#glow)"/>
   <rect width="1280" height="320" fill="url(#grain)"/>
