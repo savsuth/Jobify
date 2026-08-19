@@ -6,9 +6,7 @@
 
 **A multi-agent job application pipeline built with LangGraph and Claude**
 
-Discovers live postings, filters them deterministically, scores candidate fit, and tailors resumes only from evidence already on record.
-
-`Discovery` · `Deterministic Filtering` · `ATS Scoring` · `Resume Tailoring` · `Tracking`
+`Discovery` · `Filtering` · `ATS Scoring` · `Resume Tailoring` · `Tracking`
 
 [![Python](https://img.shields.io/badge/Python%203.11%2B-blue?logo=python&logoColor=white)](https://www.python.org)
 [![LangGraph](https://img.shields.io/badge/LangGraph-1c1c1c?logo=langgraph&logoColor=white)](https://www.langchain.com/langgraph)
