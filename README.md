@@ -155,16 +155,16 @@ The pipeline is implemented as a [LangGraph](https://github.com/langchain-ai/lan
 
 ```mermaid
 flowchart TD
-    START(["Start"]) --> DJ["Discover Jobs<br/><code>discover_jobs</code>"]
+    START(["Start"]) --> DJ["Discover Jobs"]
 
-    DJ -->|New or Unscored Job| AJ["Analyze Job<br/><code>analyze_job</code>"]
+    DJ -->|New Job| AJ["Analyze Job"]
     AJ --> D1{"Match Score"}
     D1 -->|Below ATS Threshold| REJ(["End<br/>Rejected"])
-    D1 -->|Within Tailoring Band| RA["Resume Agent<br/><code>resume_agent</code>"]
-    D1 -->|At or Above No-Tailor Threshold| SM["Select Master Resume<br/><code>select_master_resume</code>"]
+    D1 -->|Within Tailoring Band| RA["Resume Agent"]
+    D1 -->|At or Above No-Tailor Threshold| SM["Select Master Resume"]
 
-    DJ -->|"Recovered, Below No-Tailor Threshold"| RA
-    DJ -->|"Recovered, At/Above No-Tailor Threshold"| SM
+    DJ -->|Recovered, Below No-Tailor Threshold| RA
+    DJ -->|Recovered, At/Above No-Tailor Threshold| SM
 
     RA --> DONE1(["End<br/>Resume Selection Recorded"])
     SM --> DONE2(["End<br/>Master Resume Selected"])
