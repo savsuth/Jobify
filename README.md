@@ -241,55 +241,6 @@ The library lives as local files under version control rather than in a hosted s
 
 ---
 
-## Data Flow
-
-One posting's path from a live listing to a linked resume in the tracker: every gate below is a deterministic check except the two marked otherwise, which are the only points a job ever reaches Claude.
-
-```mermaid
-flowchart TD
-    A["Live Posting<br/>Greenhouse · Lever · Web Search"] --> B["Normalized Job Record<br/><code>NormalizedJob</code>"]
-
-    subgraph FILTER["Discovery Filters"]
-        C{"US, Full-Time,<br/>Target Role?"}
-        D{"Already Seen<br/>as a Duplicate?"}
-    end
-
-    B --> C
-    C -->|No| R1(["Discarded"])
-    C -->|Yes| D
-    D -->|Yes| R2(["Discarded as Duplicate"])
-    D -->|No| E["Persisted as a Job Record<br/><code>jobs</code>"]
-
-    subgraph GATES["Eligibility Gates"]
-        F{"Currently Eligible<br/>and Fresh?"}
-        G{"Work-Authorized?"}
-    end
-
-    E --> F
-    F -->|No| R3(["Excluded From This Run"])
-    F -->|Yes| G
-    G -->|Ineligible| R4(["Marked Ineligible<br/>No Claude Call"])
-    G -->|Eligible or Unknown| H["ATS Agent Scores the Job<br/><code>score_job()</code>"]
-
-    subgraph DECIDE["Score-Based Routing"]
-        I{"Match Score<br/>vs. Thresholds"}
-    end
-
-    H --> I
-    I -->|Below ATS Threshold| R5(["Marked Rejected"])
-    I -->|Within Tailoring Band| L["Resume Agent Decides<br/><code>decide_and_tailor()</code>"]
-    I -->|At or Above No-Tailor Threshold| K["Select Master Resume<br/><code>select_master_resume()</code><br/>No Claude Call"]
-
-    L --> J{"Tailoring Needed?"}
-    J -->|Yes| N["PDF Rendered<br/><code>compile_tex_to_pdf()</code>"]
-    J -->|No| M["Resume Selection Recorded<br/><code>resume_selections</code>"]
-    N --> M
-    K --> M
-
-    M --> O["Excel Tracker Row Added<br/><code>build_job_tracker.py</code>"]
-```
-
----
 
 ## Identity And Deduplication
 
