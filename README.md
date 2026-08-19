@@ -47,13 +47,12 @@ For every qualifying job, the system assembles one complete application record: 
 
 ## What Jobify Gives You
 
-- **Deterministic Pre-Filtering:** Location, employment type, role, and freshness resolved in code before a posting reaches Claude, so no LLM call is spent on a posting that was never eligible
+- **Pre-Filtering:** - Before a posting reaches Claude, the location, employment type, and role are resolved in code. This ensures that Claude does not make any LLM calls on postings that are not eligible.
 - **Cross-Source Deduplication:** `(source, source_id)` catches same-source repeats, and a URL-derived `canonical_key` catches the same posting found again through a different source
 - **Evidence-Bound Resume Tailoring:** A pool of citable projects and facts is computed in Python before the model runs, from the master resume, live GitHub context, and an approved project library: nothing outside that pool can be referenced
-- **Full Pipeline Recovery:** Every run re-queries for jobs left unscored or undecided by a prior run and resumes them, instead of losing partial progress or reprocessing what already finished
+- **Full Pipeline Recovery:** - Each run automatically re-queries for jobs that were left unfinished or undecided by a previous run, preventing partial progress loss or unnecessary reprocessing of completed tasks.
 - **Persisted Decision Trail:** Every job's discovery, score, and resume decision is a row in Postgres, rebuildable into an Excel workbook at any time
-- **Fail-Safe PDF Compilation:** A one-page limit is enforced with a byte-level page-count check; a multi-page or failed compile yields no PDF, only the `.tex` source
-
+- **PDF Compilation:** - Any page in PDF format will be delivered based on the specified filters and requirements. A byte-level page-count check ensures that the limit is enforced. If a multi-page or failed compilation occurs, no PDF will be generated.
 ---
 
 ## Why Jobify
