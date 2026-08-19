@@ -32,7 +32,7 @@ For every qualifying job, the system generates the corresponding resume in PDF a
 
 ## Who This Is For
 
-- **Job seekers who keep a LaTeX resume as their source of truth** and want location, role, freshness, and duplicate identity resolved deterministically before any posting reaches an LLM, with tailoring restricted to evidence that already exists in their own record
+- **Job seekers** who want precise control over job filters such as **role, location, seniority, work arrangement, employment type, company, and job freshness**, while tailoring their resume to each job based on their needs.
 - **Engineers evaluating LangGraph's `Send()` and `Command()` routing** in a production-oriented pipeline where fan-out, scoring, and recovery logic operate against a real multi-source job feed rather than a toy graph.
 
 <div align="center">
