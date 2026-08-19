@@ -107,13 +107,13 @@ flowchart LR
         WS["Claude Web Search"]
     end
 
-    DISC["Discovery Layer<br/>Deterministic Filters"]
+    DISC["Discovery Layer"]
     DB[("Postgres<br/>Job and Resume Records")]
     ATS["ATS Agent"]
     RES["Resume Agent"]
-    CLAUDE["Claude<br/>Anthropic API"]
+    CLAUDE["<br/>Anthropic API"]
     PDFR["PDF Renderer"]
-    XLS["Excel Tracker"]
+    XLS["Excel sheet"]
     OUT1["Resume PDFs"]
     OUT2["Tracker Workbook"]
 
