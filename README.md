@@ -6,6 +6,8 @@
 
 **A multi-agent job application pipeline built with LangGraph and Claude**
 
+Discovery, filtering, and resume tailoring — built with Claude and Neon.
+
 `Discovery` · `Filtering` · `ATS Scoring` · `Resume Tailoring` · `Tracking`
 
 [![Python](https://img.shields.io/badge/Python%203.11%2B-blue?logo=python&logoColor=white)](https://www.python.org)
