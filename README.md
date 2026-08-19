@@ -28,8 +28,6 @@ Jobify addresses both failure modes by separating deterministic validation from 
 
 For every qualifying job, the system generates the corresponding resume in PDF and LaTeX formats and records the application details in an Excel tracker.
 
-> **Scope:** Jobify discovers, filters, scores, and prepares resumes. It does not submit applications, provide a review UI, or provide a dashboard: a human reviews and submits every application by hand. Company preferences and the ATS threshold are configured through `config/preferences.yaml` today rather than through a UI.
-
 ---
 
 ## Who This Is For
