@@ -139,15 +139,15 @@ flowchart LR
 | PDF Renderer | Deterministic Python | Converts LaTeX into a one-page PDF via `pdflatex` | `output/resumes/pdf/*.pdf` |
 | Excel Tracker | Deterministic Python | Reads the database and writes a reviewable workbook | `output/job_tracker.xlsx` |
 
-Only two components in this architecture make LLM calls. The rest are deterministic Python components: cheaper to run, faster, testable without mocking a model, and guaranteed to produce the same result on every run.
+Only two components in this architecture make LLM calls. The rest are deterministic Python components. They are cheaper to run, faster, testable without mocking a model, and guaranteed to produce the same result on every run.
 
-A single LLM prompt handling discovery, evaluation, and generation in one pass would have no intermediate point at which to verify its work, bound its cost, or catch a bad decision before it compounds. Jobify separates that work into three discrete stages instead, each solved with the method suited to it:
+A single LLM prompt handling discovery, evaluation, and generation in one pass would have no intermediate point at which to verify its work, bound its cost, or catch a bad decision before it compounds. Jobify separates that work into three distinct stages instead, each solved using the method suited to it:
 
-- **Discovery** is a data problem, solved without model judgment: fetch from several sources, normalize their inconsistent shapes, and apply hard filters
-- **ATS analysis** is a judgment problem: whether a specific candidate fits a specific job, which requires a model capable of reading both and reasoning about the match
-- **Resume tailoring** is a generation problem bound by a correctness constraint: the output must remain factually accurate, working from a fixed, pre-approved pool of evidence rather than a blank page
+- **Discovery** is a data problem that does not require model judgment. It involves fetching data from several sources, normalizing their inconsistent shapes, and applying filters.
+- **ATS analysis** is a judgment problem that requires a model capable of reading both the data and reasoning about the match. It determines whether a specific candidate fits a specific job.
+- **Resume tailoring** is a generation problem that is bound by a correctness constraint. The output must remain factually accurate and work from a fixed, pre-approved pool of evidence rather than a blank page.
 
-LangGraph coordinates these stages, owning state and routing between them. Each agent is specialized and stateless between calls; deterministic Python code enforces the hard constraints directly, so a filter's outcome for a given job is identical on every run.
+LangGraph coordinates these stages, managing the state and routing between them. Each agent is specialized and stateless between calls. Python code directly enforces the hard constraints, ensuring that a filter’s outcome for a given job remains identical on every run.
 
 ### LangGraph Orchestration
 
@@ -180,80 +180,92 @@ LangGraph's advantage over a hand-written loop lies in its `Send()` fan-out and 
 
 ### How The Agents Work Together
 
-The agents coordinate through persisted job and analysis state in the database: the Discovery layer normalizes and filters a raw posting into a `Job` row, gated on `current_eligibility` and posting freshness, and carries its `id`, `canonical_key`, and description forward. The ATS Agent reads that description alongside the candidate's structured profile and writes a `match_score`, a status, and its reasoning back to `job_analysis`; only a job whose score meets the configured threshold moves on. The Resume Agent then reads the job, the ATS result, the master resume, and GitHub context, decides whether to tailor the resume or leave it unchanged, and, when it tailors, writes the generated LaTeX and a `draft_id` to `resume_drafts`, alongside a `resume_selections` row recording which resume was used and why. The PDF renderer and the Excel tracker close the loop, reading that same `id` and `draft_id` to resolve one consistent, deterministic filename and link: every stage reuses the decision an earlier one already made.
+The agents coordinate their actions through persistent job and analysis states in the database. The Discovery layer normalizes and filters a raw posting into a `Job` row, considering factors like `current_eligibility` and posting freshness. It also passes along the `id`, `canonical_key`, and description of the job.
+
+The ATS Agent then reads the description alongside the candidate’s structured profile and calculates a `match_score`, status, and reasoning. It writes these values back to the `job_analysis` table. Only jobs with a score that meets the configured threshold are considered for further processing.
+
+Next, the Resume Agent reads the job, the ATS result, the master resume, and GitHub context. It then decides whether to tailor the resume or leave it unchanged. If it tailors the resume, it generates the LaTeX code and a `draft_id` and writes them to the `resume_drafts` table. Additionally, it creates a `resume_selections` table that records which resume was used and the reason for the choice.
+
+Finally, the PDF renderer and the Excel tracker complete the loop by reading the same `id` and `draft_id` to generate a consistent and deterministic filename and link. Each stage in the process reuses the decisions made by earlier stages.
 
 ### Deterministic Logic Versus AI Logic
 
-Hard constraints are deterministic; model-based reasoning is used only where interpretation or generation is genuinely required. The following are resolved by code, verified by tests, and reproduced identically on every run:
+Hard constraints are deterministic; model-based reasoning is employed only when interpretation or generation is genuinely necessary. The following are resolved through code, verified by tests, and reproduced identically on every run:
 
 - US location, full-time employment, and target role filtering
-- posting freshness and cross-source canonical identity
-- database identity and artifact naming
+- Posting freshness and cross-source canonical identity
+- Database identity and artifact naming
 - PDF page-count verification after every compile
 
-A model is asked to exercise judgment in exactly two places, both of which require reading and reasoning about unstructured text:
+A model is tasked with exercising judgment in precisely two locations, both of which necessitate reading and reasoning about unstructured text:
 
-- ATS evaluation, judging how well a specific resume fits a specific job
-- resume tailoring, judging whether and how the resume should be adapted for it
+- Applicant Tracking System (ATS) evaluation, assessing the suitability of a specific resume for a specific job
+- Resume tailoring, determining whether and how a resume should be adapted for a particular job
 
-The first list is always resolved by code; the second always requires a model, since both judgments demand genuine interpretation of unstructured text.
+The first list is consistently resolved through code; the second always requires a model, as both judgments demand genuine interpretation of unstructured text.
 
 ---
 
 ## Discovery
 
-The Discovery layer collects candidate postings from configured sources and normalizes them into a common representation before anything downstream ever encounters them. Three source adapters perform this work: `greenhouse.py` and `lever.py` retrieve postings directly from each company's public board API, while `web_search.py` employs Claude's web-search tool to surface postings from outside those two platforms. Lever provides an authoritative country code, Greenhouse provides an office list and a `first_published` date, and web search provides the posting text itself, from which the remaining fields are derived.
+The Discovery layer collects candidate postings from configured sources and normalizes them into a standardized representation before any downstream processing occurs. Three source adapters perform this task: `greenhouse.py` and `lever.py` retrieve postings directly from each company’s public board API, while `web_search.py` utilizes Claude’s web-search tool to surface postings from external platforms. Lever provides an authoritative country code, Greenhouse provides an office list and a `first_published` date, and web search provides the posting text itself, from which the remaining fields are derived.
 
-Every fetched posting is subjected to a deterministic filter for US location, full-time employment, and target role before being persisted, and a `current_eligibility` check re-validates each job against the current rules on every retry, ensuring historical rows remain reassessable over time. Freshness is determined from each posting's own publish date, `posted_at`, within a configurable window set by `posted_within_days` (default 7 days).
+Each fetched posting undergoes a deterministic filter to determine eligibility for US location, full-time employment, and the target role before being persisted. A `current_eligibility` check re-validates each job against the current rules on every retry, ensuring historical rows remain reassessable over time. Freshness is determined from each posting’s publish date, `posted_at`, within a configurable window set by `posted_within_days` (default 7 days).
 
 ---
 
 ## ATS Agent
 
-The ATS Agent performs the model-driven job-fit analysis, making one Claude call per job through `score_job`. Given the job description and the candidate's structured profile, it returns a `match_score`, a breakdown of which hard and preferred requirements are met or missing, and a short rationale grounded in specific facts from both. The prompt restricts the candidate's credit strictly to what is literally present in their profile. `search_config.ats_threshold`, read from the database, determines whether the job proceeds to the Resume Agent. A malformed or incomplete Claude response raises a diagnosable error instead of crashing the run; that job is left unscored and retried on the next run.
+The Automated Talent Screening (ATS) Agent executes the model-driven job-fit analysis, performing one Claude call per job through the `score_job` function. Given the job description and the candidate’s structured profile, it returns a `match_score`, which provides a breakdown of the hard and preferred requirements that are met or missing, along with a concise rationale grounded in specific facts from both sources. The prompt restricts the candidate’s credit to only what is explicitly present in their profile. The `search_config.ats_threshold`, retrieved from the database, determines whether the job proceeds to the Resume Agent. A malformed or incomplete Claude response raises a diagnosable error instead of crashing the run; that job is left unscored and retried during the next run.
 
 ---
 
 ## Resume Agent
 
-The Resume Agent uses the ATS result and the candidate's evidence to determine whether tailoring is necessary, making one Claude call, `decide_and_tailor`, for jobs that fall within a configurable tailoring band between `ats_threshold` and `resume_no_tailor_threshold`. The ATS result serves only as read-only context for a presentation decision. At or above `resume_no_tailor_threshold`, the match is already considered strong enough that the master resume is used without modification, and no Claude call is made. Within the band, the agent's behavior shifts with the score: toward the lower end, it actively seeks a legitimate improvement; toward the upper end, it defaults to retaining the master resume unless a specific, meaningful change is warranted.
+The Resume Agent utilizes the output of the Applicant Tracking System (ATS) and the candidate’s evidence to determine whether tailoring is required. For jobs that fall within a configurable tailoring range between `ats_threshold` and `resume_no_tailor_threshold`, the ATS result serves as a read-only context for a presentation decision. At or above `resume_no_tailor_threshold`, the match is deemed strong enough that the master resume is used without modification, and no Claude call is initiated. Within the specified range, the agent’s behavior adapts to the score: towards the lower end, it actively seeks a legitimate improvement; towards the upper end, it defaults to retaining the master resume unless a specific and meaningful change is warranted.
 
-Neither threshold is fixed by the system. Both `ats_threshold` and `resume_no_tailor_threshold` are ordinary fields on the single-row `search_config` table and can be set to any value. The current 30–65 band reflects a personal choice rather than a system default, set in part to assess, through live scraping, how the current job market scores against the candidate's actual profile.
+Neither threshold is predefined by the system. Both `ats_threshold` and `resume_no_tailor_threshold` are ordinary fields in the single-row `search_config` table and can be assigned any value. The current range of 30–65 reflects a personal preference rather than a system default, established in part to assess, through live scraping, how the current job market aligns with the candidate’s actual profile.
 
-The Resume Agent is deliberately conservative about what it can change. It may reorganize and selectively tailor the candidate's existing evidence, but it cannot introduce a technology the candidate has not used, a metric that does not exist, production experience an academic project lacks, or a scale of system the candidate has never built. The pool of projects it may cite is computed once in Python before the model runs, drawn from the master resume, live GitHub context, and the Candidate Project Library: a project outside that pool cannot be referenced, regardless of what the job description requests. Tailoring consists of selecting and reordering real evidence, not inventing it. A deterministic check afterward verifies that any GitHub fact the model reports using was indeed supplied to it.
+The Resume Agent adopts a conservative approach to modifications. It may reorganize and selectively tailor the candidate’s existing evidence, but it cannot introduce technologies the candidate has not utilized, metrics that do not exist, production experience lacking from an academic project, or scales of system the candidate has not developed. The pool of projects that can be referenced is computed once in Python before the model executes, drawn from the master resume, live GitHub context, and the Candidate Project Library. A project outside this pool cannot be referenced, regardless of the job description’s requirements. Tailoring involves selecting and reordering existing evidence, not fabricating it. A subsequent deterministic verification ensures that any GitHub facts reported by the model were indeed supplied to it.
 
 ---
 
 ## Candidate Project Library
 
-`data/candidate_projects/` extends the tailoring pool with real GitHub projects that were never converted into resume bullets. Each project is ingested as three separate layers, its supporting material, the facts derived from it, and template-generated bullets, so that nothing is invented at the bullet-writing stage. Every ingested project begins in a `needs_review` state, and a human must explicitly approve it before the Resume Agent can see it, allowing the tailoring pool to include more than the master resume without introducing unverified claims.
+The `data/candidate_projects/` directory extends the tailoring pool by incorporating GitHub projects that have not yet been converted into resume bullets. Each project is ingested in three distinct layers: its supporting materials, the facts derived from it, and template-generated bullets. This approach ensures that no content is fabricated during the process. Every ingested project initially enters a `needs_review` state, requiring explicit human approval before the Resume Agent can access it. This allows the tailoring pool to encompass more than the master resume without introducing unverified claims.
 
-The library lives as local files under version control rather than in a hosted store, a deliberate choice while the system serves a single candidate. Migrating it into the database instead, cached and re-extracted only on change in the same manner as the candidate profile, would reduce repeated Claude calls should the system ever need to scale.
+The library is maintained as local files under version control, rather than hosted in a centralized store. This deliberate choice is made since the system currently serves only a single candidate. Migrating the library into the database, caching it, and extracting it only upon changes, similar to the candidate profile, would reduce the frequency of repeated calls to Claude if the system ever requires scalability.
 
 ---
 
 ## GitHub Integration
 
-`src/integrations/github.py` supplies the Resume Agent with real, current repository facts for projects already linked from the master resume; it is supporting evidence, never a replacement for the resume or the profile. `extract_project_repos()` finds every `github.com/OWNER/REPO` link in the resume's LaTeX, and `fetch_repo_context()` pulls each repo's description, languages, topics, and a README excerpt, returning `None` for anything missing, private, or unavailable rather than guessing. `fetch_github_context()` is the pipeline's entry point: called once per run, not once per job, and scoped only to repos the resume already references.
+The `src/integrations/github.py` module provides the Resume Agent with authentic and current repository information for projects already linked from the master resume. It serves as supporting evidence rather than a replacement for the resume or the profile.
 
-`list_account_repos()` and `fetch_repo_root_contents()` are broader-discovery primitives used only by the offline, human-run `scripts/maintenance/build_project_library.py`, never by the live pipeline. `GITHUB_TOKEN` is optional; without it, requests fall back to GitHub's unauthenticated rate limit, which is sufficient for normal, low-frequency use.
+The `extract_project_repos()` function identifies every `github.com/OWNER/REPO` link within the resume’s LaTeX format. Subsequently, the `fetch_repo_context()` function retrieves the description, programming languages, topics, and a README excerpt for each repository. It returns `None` for any missing, private, or unavailable information instead of making assumptions.
+
+The `fetch_github_context()` function serves as the pipeline’s entry point. It is executed once per run, not once per job, and is scoped to repositories already referenced in the resume.
+
+The `list_account_repos()` and `fetch_repo_root_contents()` functions are broader discovery primitives utilized exclusively by the offline, human-operated `scripts/maintenance/build_project_library.py` script. They are not employed by the live pipeline.
+
+The `GITHUB_TOKEN` parameter is optional. Without it, requests fall back to GitHub’s unauthenticated rate limit, which is sufficient for normal, low-frequency usage.
 
 ---
 
 
 ## Identity And Deduplication
 
-`(source, source_id)` catches repeats from the same source: Greenhouse and Lever each use their own native posting ID. `canonical_key` extends that coverage to the same real posting found twice through different sources, a source-independent identity derived from the posting URL itself. A job discovered once through web search and later through the native Lever connector resolves to the same `canonical_key` and is recognized as one job rather than persisted twice. Both checks are exact and structural, built entirely from posting IDs and URLs, never from title or company text similarity.
+The `(source, source_id)` pattern captures repetitions from the same source. For instance, Greenhouse and Lever each use their unique native posting ID. The `canonical_key` extends this coverage to the same real posting found twice through different sources, a source-independent identity derived from the posting URL itself. A job discovered once through web search and later through the native Lever connector resolves to the same `canonical_key` and is recognized as a single job rather than persisted twice. Both checks are precise and structural, constructed entirely from posting IDs and URLs, never from title or company text similarity.
 
 ---
 
 ## Outputs
 
-The pipeline delivers exactly two outputs for every job that reaches this stage: a resume the candidate can submit, and a row in the Excel tracker recording that job's outcome. Both are produced deterministically from the database.
+The pipeline generates precisely two outputs for every job that reaches this stage: a resume that the candidate can submit and a row in the Excel tracker recording the job’s outcome. Both outputs are deterministically generated from the database.
 
-Every resume decision produces two artifacts: the generated LaTeX source (`.tex`, kept on disk for reproducibility) and the compiled PDF (the artifact the candidate submits). Both the tailored and master paths compile through the same `pdflatex` toolchain, with a one-page limit enforced — a multi-page result or a failed compile yields no PDF, only the `.tex`. The PDF is named deterministically as `AASAV-SUTHAR-<COMPANY>.pdf`, with a `-2` suffix only when a second, genuinely different tailored resume exists for the same company.
+Every resume decision produces two artifacts: the generated LaTeX source (`.tex`, which is retained on disk for reproducibility) and the compiled PDF (the artifact that the candidate submits). Both the tailored and master paths compile using the same `pdflatex` toolchain, with a one-page limit enforced. A multi-page result or a failed compile yields no PDF; only the `.tex` file is generated. The PDF is named deterministically as `USER-NAME-<COMPANY>.pdf`, with a `-2` suffix only when a second PDF is generated.
 
-`scripts/reporting/build_job_tracker.py` rebuilds a workbook directly from the live database, and each row consolidates that job's complete pipeline record: posting details, freshness and eligibility classification, the ATS result, the resume decision, and, once generated, the resume draft's metadata and a link to its PDF. That data is organized across sheets: **CURRENT TARGETS** (currently eligible jobs), **JOBS** (full history), **REVIEW** (ambiguous eligibility), **DUPLICATES** (canonical-key groups and which row represents each), **RESUMES**, and **SUMMARY**. A **NEW JOBS** sheet is added by the run-scoped validation scripts under `scripts/validation/`, but it is not part of a normal rebuild. Every Job URL and Resume PDF link is clickable, and the resume link is written only once the PDF is confirmed to exist on disk.
+`scripts/reporting/build_job_tracker.py` rebuilds a workbook directly from the live database. Each row in the workbook consolidates the complete pipeline record for that job, including posting details, freshness and eligibility classification, the ATS result, the resume decision, and, once generated, the resume draft’s metadata and a link to its PDF. This data is organized across sheets: **CURRENT TARGETS** (currently eligible jobs), **JOBS** (a full history of all jobs), **REVIEW** (ambiguous eligibility), **DUPLICATES** (canonical-key groups and which row represents each), **RESUMES**, and **SUMMARY**. A **NEW JOBS** sheet is added by the run-scoped validation scripts under `scripts/validation/`, but it is not part of a normal rebuild. Every Job URL and Resume PDF link is clickable, and the resume link is written only once the PDF is confirmed to exist on disk.
 
 ---
 
@@ -275,10 +287,10 @@ Historical rows persist indefinitely. A job that no longer meets today's rules i
 
 ## Reliability
 
-- Claude JSON responses are never parsed with a bare `json.loads`: malformed or incomplete output raises a diagnosable error instead of crashing the run
-- A failed Claude call is isolated to one job; the run continues, and that job is retried automatically next time
-- PDF generation fails safe: a bad or multi-page compile never produces an incorrect PDF, and a deterministic page-count check verifies every artifact before it is linked
-- Resume filenames and file paths are computed the same way at generation time and at report time, so they can never drift apart
+- Claude JSON responses are never parsed using a bare `json.loads`. Malformed or incomplete output raises a diagnosable error instead of crashing the run.
+- A failed Claude call is isolated to a single job; the run continues, and that job is retried automatically the next time.
+- PDF generation is fail-safe: a bad or multi-page compile never produces an incorrect PDF, and a deterministic page-count check verifies every artifact before it is linked.
+- Resume filenames and file paths are computed the same way at generation time and at report time, ensuring they never drift apart.
 
 ---
 
@@ -394,17 +406,17 @@ except PdfRenderError as exc:
 
 ## Testing And Validation
 
-**Automated suite.** 327 tests pass under `pytest`, with no network access: every Claude and HTTP call is mocked. Together, they cover:
+**Automated Suite:** The automated suite comprises 327 tests that successfully pass under pytest, ensuring that network access is disabled. Every Claude and HTTP call is meticulously mocked. This comprehensive suite encompasses the following functionalities:
 
-- discovery source parsing and the deterministic filters
-- eligibility and freshness classification
-- canonical-identity deduplication
-- the LangGraph pipeline's routing and recovery behavior
-- the Resume Agent's evidence constraints
+- Discovery source parsing and the application of deterministic filters
+- Eligibility and freshness classification
+- Canonical-identity deduplication
+- The LangGraph pipeline’s routing and recovery behavior
+- The Resume Agent’s evidence constraints
 - PDF artifact generation
-- the Excel reporting logic
+- The Excel reporting logic
 
-**Live validation.** Beyond the mocked suite, the system has been run end to end against real Greenhouse, Lever, and web-search sources, using real Claude API calls. These runs confirmed that the filters, freshness gate, and deduplication behave correctly against live postings, and that every generated PDF is byte-verified as a genuine one-page artifact.
+**Live Validation:** In addition to the automated suite, the system has undergone extensive live validation against real Greenhouse, Lever, and web-search sources. These live runs utilized authentic Claude API calls, verifying the correctness of the filters, freshness gate, and deduplication mechanisms against live postings. Furthermore, every generated PDF has been byte-verified as a genuine one-page artifact.
 
 ---
 
@@ -469,9 +481,9 @@ pytest                                             # run the test suite
 
 ## Configuration
 
-Runtime settings live in `config/preferences.yaml` and are seeded into the database via `scripts/maintenance/seed_config.py`. The pipeline always reads its configuration from the database, so this script must be re-run after any edit. It controls which Greenhouse and Lever boards to fetch from, the freshness window (`posted_within_days`, default `7`, `null` to disable it), `ats_threshold`, `resume_no_tailor_threshold`, and `max_jobs_per_run`.
+The runtime settings reside in the `config/preferences.yaml` file and are subsequently populated into the database via the `scripts/maintenance/seed_config.py` script. The pipeline consistently retrieves its configuration from the database, necessitating a rerun of this script after any modifications. This script controls the selection of Greenhouse and Lever boards to be fetched, the freshness window (`posted_within_days`, default value is 7, and can be disabled by setting it to `null`), the `ats_threshold`, the `resume_no_tailor_threshold`, and the `max_jobs_per_run` parameters.
 
-> **Security Note:** Never commit `.env` or a real API key. `output/` is gitignored and is regenerable from the database at any time.
+**Security Warning:** Refrain from committing `.env` or a genuine API key. The `output/` directory is Git-ignored and can be regenerated from the database at any time.
 
 ---
 
