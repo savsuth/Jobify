@@ -58,7 +58,7 @@
   <rect x="66" y="170" width="118" height="2.5" rx="1.25" fill="url(#underline)"/>
 
   <text x="66" y="207" font-family="'Inter','Segoe UI',Helvetica,Arial,sans-serif" font-size="17" font-weight="400" fill="#ab9f92">Discovery, filtering, and resume tailoring &#8212;</text>
-  <text x="66" y="232" font-family="'Inter','Segoe UI',Helvetica,Arial,sans-serif" font-size="17" font-weight="400" fill="#ab9f92">built with Claude and Neon.</text>
+  <text x="66" y="232" font-family="'Inter','Segoe UI',Helvetica,Arial,sans-serif" font-size="17" font-weight="400" fill="#ab9f92">Built with Claude and Neon.</text>
 
   <rect x="741" y="54" width="1" height="212" fill="url(#divider)"/>
 
