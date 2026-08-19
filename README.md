@@ -24,7 +24,7 @@ git clone https://github.com/savsuth/jobify.git && cd jobify && pip install -e "
 
 An unconstrained LLM pipeline for job search encounters two predictable failure modes. Aggregated postings introduce noise that the source data itself may fail to identify, including stale listings, duplicates across platforms, and positions requiring qualifications the candidate does not possess. Similarly, a model tasked with tailoring a resume for each posting, without explicit constraints on what it can assert, may fabricate experience or introduce unsupported claims, leading to more significant issues during resume generation.
 
-Jobify addresses both failure modes by strictly separating deterministic validation from model-driven reasoning. Before a posting enters the working pipeline, its location, employment type, role, and cross-source identity are resolved through code. Only postings that pass this initial validation are evaluated against their job descriptions and assigned an ATS score. Two purpose-built agents then take over. The first assesses the alignment between the posting and the candidate's master resume. The second determines whether tailoring the resume would improve the match and, when appropriate, generates the tailored resume according to the requirements.
+Jobify addresses both failure modes by separating deterministic validation from model-driven reasoning. Before a posting enters the working pipeline, its location, employment type, role, and cross-source identity are resolved through code. Only postings that pass this initial validation are evaluated against their job descriptions and assigned an ATS score. Two purpose-built agents then take over. The first assesses the alignment between the posting and the candidate's master resume. The second determines whether tailoring the resume would improve the match and, when appropriate, generates the tailored resume according to the requirements.
 
 For every qualifying job, the system generates the corresponding resume in PDF and LaTeX formats and records the application details in an Excel tracker.
 
@@ -52,7 +52,7 @@ For every qualifying job, the system generates the corresponding resume in PDF a
 - **Evidence-Bound Resume Tailoring:** A pool of citable projects and facts is computed in Python before the model runs, from the master resume, live GitHub context, and an approved project library: nothing outside that pool can be referenced
 - **Full Pipeline Recovery:** - Each run automatically re-queries for jobs that were left unfinished or undecided by a previous run, preventing partial progress loss or unnecessary reprocessing of completed tasks.
 - **Persisted Decision Trail:** Every job's discovery, score, and resume decision is a row in Postgres, rebuildable into an Excel workbook at any time
-- **PDF Compilation:** - Any page in PDF format will be delivered based on the specified filters and requirements. A byte-level page-count check ensures that the limit is enforced. If a multi-page or failed compilation occurs, no PDF will be generated.
+- **PDF Compilation:** - LaTeX resumes are compiled into PDF with the required page limit enforced by a byte-level page-count check.
 ---
 
 ## Why Jobify
