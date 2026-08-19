@@ -22,11 +22,11 @@ git clone https://github.com/savsuth/jobify.git && cd jobify && pip install -e "
 
 ---
 
-An unconstrained LLM pipeline for job search fails in two predictable ways. Aggregated postings carry noise the source data never flags on its own: stale listings, duplicates across platforms, and postings whose requirements the candidate does not meet. A model asked to tailor a resume for every posting, with no limit on what it can claim, might invent experience the candidate does not have rather than producing a stronger match.
+An unconstrained LLM pipeline for job search encounters two predictable failure modes. Aggregated postings introduce noise that the source data itself may fail to identify, including stale listings, duplicates across platforms, and positions requiring qualifications the candidate does not possess. Similarly, a model tasked with tailoring a resume for each posting, without explicit constraints on what it can assert, may fabricate experience or introduce unsupported claims, leading to more significant issues during resume generation.
 
-Jobify addresses both failure modes with a strict separation between deterministic validation and model-driven reasoning. Location, employment type, role, and cross-source identity are resolved in code before a posting ever reaches the working stage. Only postings that survive that filtering are evaluated against their description and assigned an ATS score. The next step will be covered by two purpose-built agents: one evaluates fit against the candidate's master resume, and the other determines whether tailoring would improve the match, generating it only from data in the record.
+Jobify addresses both failure modes by strictly separating deterministic validation from model-driven reasoning. Before a posting enters the working pipeline, its location, employment type, role, and cross-source identity are resolved through code. Only postings that pass this initial validation are evaluated against their job descriptions and assigned an ATS score. Two purpose-built agents then take over. The first assesses the alignment between the posting and the candidate's master resume. The second determines whether tailoring the resume would improve the match and, when appropriate, generates the tailored resume according to the requirements.
 
-For every qualifying job, the system assembles one complete application record: a resume, master or tailored, and a row in the Excel tracker.
+For every qualifying job, the system generates the corresponding resume in PDF and LaTeX formats and records the application details in an Excel tracker.
 
 > **Scope:** Jobify discovers, filters, scores, and prepares resumes. It does not submit applications, provide a review UI, or provide a dashboard: a human reviews and submits every application by hand. Company preferences and the ATS threshold are configured through `config/preferences.yaml` today rather than through a UI.
 
