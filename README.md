@@ -22,9 +22,9 @@ git clone https://github.com/savsuth/jobify.git && cd jobify && pip install -e "
 
 ---
 
-An unconstrained LLM pipeline for job search fails in two predictable ways. Aggregated postings carry noise the source data never flags on its own: stale listings, duplicates across platforms, and postings whose citizenship or clearance requirements the candidate doesn't meet. A model asked to tailor a resume for every posting, with no limit on what it can claim, will invent experience the candidate doesn't have whenever fabrication produces a stronger match.
+An unconstrained LLM pipeline for job search fails in two predictable ways. Aggregated postings carry noise the source data never flags on its own: stale listings, duplicates across platforms, and postings whose requirements the candidate does not meet. A model asked to tailor a resume for every posting, with no limit on what it can claim, might invent experience the candidate does not have rather than producing a stronger match.
 
-Jobify addresses both failure modes with a strict separation between deterministic validation and model-driven reasoning. Location, employment type, role, freshness, and cross-source identity are resolved in code before a posting ever reaches an LLM. Only postings that survive that filtering are evaluated against their description and assigned an ATS score. From there, two purpose-built agents take over: one evaluates fit against the candidate's actual resume, and the other determines whether tailoring would improve the match, generating it only from evidence already on record.
+Jobify addresses both failure modes with a strict separation between deterministic validation and model-driven reasoning. Location, employment type, role, and cross-source identity are resolved in code before a posting ever reaches the working stage. Only postings that survive that filtering are evaluated against their description and assigned an ATS score. The next step will be covered by two purpose-built agents: one evaluates fit against the candidate's master resume, and the other determines whether tailoring would improve the match, generating it only from data in the record.
 
 For every qualifying job, the system assembles one complete application record: a resume, master or tailored, and a row in the Excel tracker.
 
