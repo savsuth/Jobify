@@ -108,7 +108,7 @@ flowchart LR
     end
 
     DISC["Discovery Layer"]
-    DB[("Postgres<br/>Job and Resume Records")]
+    DB[("Postgres<br/> Resume Records")]
     ATS["ATS Agent"]
     RES["Resume Agent"]
     CLAUDE["<br/>Anthropic API"]
